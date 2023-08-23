@@ -1,6 +1,6 @@
 # camel-file-upload
 
-Demo application showing file upload HTTP multipart/form-data upload using servlet in Camel. This simple route logs the number of attachments in the Camel Exchange.
+Demo application showing file upload with HTTP multipart/form-data upload using servlet in Camel. This simple route logs the number of attachments in the Camel Exchange.
 
 ### attachmentMultipartBinding
 The option **attachmentMultipartBinding** binds the multipart form data to the Camel Exchange as attachments.
@@ -10,7 +10,14 @@ from("servlet:multipart?servletName=FileUploadServlet&attachmentMultipartBinding
     .log("Number of attachments: ${header.numberOfAttachments}");
 ```
 
+## Running the application
+
 To run the application, run the command `mvn clean spring-boot:run`
+
+You can then send a multipart/form-data request using curl:
+```sh
+curl -F part1=@/path/to/file -F part2=@/path/to/file http://localhost:8080/upload/multipart
+```
 
 ## Issue
 The route works correctly when using the **tomcat** embedded web server, but it doesn't work when using the **undertow** embedded web server.
